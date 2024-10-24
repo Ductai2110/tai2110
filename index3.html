@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Modals</title>
+    <style>
+        /* Modal cơ bản */
+        
+        .modal {
+            position: absolute;
+            z-index: 1;
+            background-color: white;
+            padding: 20px;
+            border: 2px solid #888;
+            border-radius: 10px;
+            width: 200px;
+            height: 150px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            display: none;
+            /* Bắt đầu ở chế độ ẩn */
+        }
+        /* Nút mở modal */
+        
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+            z-index: 999;
+            /* Đặt nút lên trên các modal */
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Nhấn vào xem có bất ngờ á babi</h2>
+    <!-- Nút kích hoạt tạo modal -->
+    <button id="startBtn">Nhấn vào đây</button>
+
+    <script>
+        var intervalID;
+
+        // Hàm tạo modal ngẫu nhiên
+        function createRandomModal() {
+            // Tạo một div cho modal
+            var modal = document.createElement("div");
+            modal.className = "modal";
+            modal.style.display = "block";
+
+            // Tạo nội dung bên trong modal
+            var modalContent = document.createElement("p");
+            modalContent.innerText = "Anh nhớ em!";
+            modal.appendChild(modalContent);
+
+            // Tạo một vị trí ngẫu nhiên cho modal trên trang
+            var randomX = Math.random() * (window.innerWidth - 200); // 200 là chiều rộng modal
+            var randomY = Math.random() * (window.innerHeight - 150); // 150 là chiều cao modal
+            modal.style.left = randomX + "px";
+            modal.style.top = randomY + "px";
+
+            // Thêm modal vào body
+            document.body.appendChild(modal);
+        }
+
+        // Bắt đầu quá trình tạo modal ngẫu nhiên
+        function startCreatingModals() {
+            intervalID = setInterval(createRandomModal, 500); // Cứ mỗi 0.5 giây tạo một modal
+        }
+
+        // Khi nhấn vào nút bắt đầu
+        document.getElementById("startBtn").onclick = function(event) {
+            event.stopPropagation(); // Ngăn chặn sự kiện nhấn chuột tiếp tục lan lên cửa sổ
+            startCreatingModals();
+        };
+
+        // Khi nhấn bất kỳ nơi nào ngoài nút, dừng quá trình tạo modal
+        window.onclick = function(event) {
+            if (event.target !== document.getElementById("startBtn")) {
+                clearInterval(intervalID); // Dừng việc tạo modal
+            }
+        };
+    </script>
+
+</body>
+
+</html>
